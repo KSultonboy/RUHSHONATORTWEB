@@ -1,0 +1,299 @@
+:root {
+  --bg: #f7f1e9;
+  --card: #ffffff;
+  --accent: #a61216;
+  --accent-soft: #f8d7da;
+  --text: #2f1d1d;
+  --muted: #7d6666;
+  --border: #ecdcc8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.brand p {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.api-label {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+
+.layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.filters select,
+.filters input,
+.checkout-form input,
+.checkout-form textarea,
+button {
+  font: inherit;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  outline: none;
+}
+
+.filters select,
+.filters input {
+  max-width: 240px;
+  width: 100%;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.product-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+}
+
+.product-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.product-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+button {
+  cursor: pointer;
+  background: #fff;
+}
+
+button.primary,
+#submitOrderButton,
+.add-button {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+button.ghost {
+  color: var(--muted);
+  background: #fff;
+}
+
+.cart-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: fit-content;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow: auto;
+}
+
+.cart-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.cart-item-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.cart-item-price {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty-input {
+  width: 90px;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkout-form h3 {
+  margin: 4px 0;
+  font-size: 16px;
+}
+
+.result {
+  border-radius: 10px;
+  padding: 10px;
+  background: #ecfdf3;
+  border: 1px solid #86efac;
+  color: #166534;
+  font-size: 14px;
+}
+
+.error {
+  background: var(--accent-soft);
+  border-color: #fda4af;
+  color: #9f1239;
+}
+
+.empty {
+  color: var(--muted);
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters select,
+  .filters input {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    padding: 12px;
+  }
+
+  .layout {
+    padding: 12px;
+  }
+
+  .panel {
+    padding: 12px;
+  }
+}

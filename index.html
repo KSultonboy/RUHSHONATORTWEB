@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruxshona Tort - Buyurtma</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">RT</div>
+        <div>
+          <h1>Ruxshona Tort</h1>
+          <p>Onlayn buyurtma</p>
+        </div>
+      </div>
+      <div class="api-label" id="apiLabel"></div>
+    </header>
+
+    <main class="layout">
+      <section class="panel products-panel">
+        <div class="panel-head">
+          <h2>Mahsulotlar</h2>
+          <div class="filters">
+            <select id="categorySelect">
+              <option value="">Barcha kategoriyalar</option>
+            </select>
+            <input id="searchInput" type="search" placeholder="Mahsulot qidirish" />
+          </div>
+        </div>
+        <div id="productsGrid" class="products-grid"></div>
+        <div id="productsEmpty" class="empty hidden">Mahsulot topilmadi.</div>
+      </section>
+
+      <aside class="panel cart-panel">
+        <div class="panel-head">
+          <h2>Savat</h2>
+          <button id="clearCartButton" class="ghost">Tozalash</button>
+        </div>
+
+        <div id="cartItems" class="cart-items"></div>
+        <div id="cartEmpty" class="empty">Savat bo'sh.</div>
+
+        <div class="cart-total">
+          <span>Jami:</span>
+          <strong id="cartTotal">0 so'm</strong>
+        </div>
+
+        <form id="checkoutForm" class="checkout-form">
+          <h3>Buyurtma ma'lumotlari</h3>
+          <input name="customerName" type="text" placeholder="Mijoz ismi" required />
+          <input name="phone" type="tel" placeholder="Telefon" required />
+          <input name="address" type="text" placeholder="Manzil" />
+          <textarea name="note" rows="3" placeholder="Izoh"></textarea>
+          <button id="submitOrderButton" type="submit">Buyurtma berish</button>
+        </form>
+
+        <div id="resultBox" class="result hidden"></div>
+      </aside>
+    </main>
+
+    <script src="./config.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
