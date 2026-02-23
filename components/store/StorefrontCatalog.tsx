@@ -16,6 +16,8 @@ export default function StorefrontCatalog({ compact = false }: Props) {
   const [products, setProducts] = useState<PublicProduct[]>([]);
   const [categoryId, setCategoryId] = useState("");
   const [q, setQ] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -25,7 +27,12 @@ export default function StorefrontCatalog({ compact = false }: Props) {
     try {
       const [nextCategories, nextProducts] = await Promise.all([
         getCategories(),
-        getProducts({ categoryId: categoryId || undefined, q: q.trim() || undefined }),
+        getProducts({
+          categoryId: categoryId || undefined,
+          q: q.trim() || undefined,
+          minPrice: minPrice ? parseInt(minPrice) : undefined,
+          maxPrice: maxPrice ? parseInt(maxPrice) : undefined,
+        }),
       ]);
       setCategories(nextCategories);
       setProducts(nextProducts);
@@ -45,13 +52,13 @@ export default function StorefrontCatalog({ compact = false }: Props) {
       loadAll();
     }, 250);
     return () => window.clearTimeout(timer);
-  }, [categoryId, q]);
+  }, [categoryId, q, minPrice, maxPrice]);
 
   const visibleProducts = useMemo(() => (compact ? products.slice(0, 8) : products), [compact, products]);
 
   return (
     <section className="catalog-block">
-      <div className="catalog-toolbar">
+      <div className="catalog-toolbar" style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) 2fr 1fr 1fr', gap: '16px' }}>
         <select value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
           <option value="">Barcha kategoriyalar</option>
           {categories.map((category) => (
@@ -64,7 +71,23 @@ export default function StorefrontCatalog({ compact = false }: Props) {
         <input
           value={q}
           onChange={(event) => setQ(event.target.value)}
-          placeholder="Mahsulot qidirish"
+          placeholder="Mahsulot qidirish..."
+        />
+
+        <input
+          type="number"
+          value={minPrice}
+          onChange={(event) => setMinPrice(event.target.value)}
+          placeholder="Min narx"
+          style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid var(--cream-dark)' }}
+        />
+
+        <input
+          type="number"
+          value={maxPrice}
+          onChange={(event) => setMaxPrice(event.target.value)}
+          placeholder="Max narx"
+          style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid var(--cream-dark)' }}
         />
       </div>
 

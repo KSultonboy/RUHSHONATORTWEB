@@ -1,6 +1,7 @@
 import Link from "next/link";
 import StorefrontCatalog from "@/components/store/StorefrontCatalog";
 import Reveal from "@/components/ui/Reveal";
+import InstagramFeed from "@/components/layout/InstagramFeed";
 
 export default function HomePage() {
   return (
@@ -8,29 +9,29 @@ export default function HomePage() {
       <section className="hero">
         <div className="container hero-grid">
           <Reveal className="hero-copy">
-            <p className="eyebrow">Ruhshona Tort</p>
-            <h1>Bayram va kundalik buyurtmalar uchun yangi tayyorlangan shirinliklar</h1>
+            <p className="eyebrow" style={{ color: 'var(--accent-strong)' }}>Premium Patisserie</p>
+            <h1>Sizning bayramingiz uchun nafis va shirin san'at asarlari</h1>
             <p>
-              Katalogdan mahsulot tanlang, savatga qo'shing va 1 daqiqada buyurtma qoldiring.
-              Buyurtma ERP tizimiga to'g'ridan-to'g'ri tushadi.
+              Ruxshona Tort — bu nafaqat shirinliklar, balki unutilmas lahzalar.
+              Har bir buyurtma mahorat va mehr bilan tayyorlanadi.
             </p>
             <div className="hero-actions">
               <Link href="/catalog" className="btn-primary">
-                Katalogni ko'rish
+                Katalogni o'rganish
               </Link>
-              <Link href="/checkout" className="btn-ghost">
-                Buyurtma berish
+              <Link href="/checkout" className="btn-ghost" style={{ border: '1px solid var(--primary)', color: 'var(--primary)' }}>
+                Hozir buyurtma berish
               </Link>
             </div>
           </Reveal>
 
-          <Reveal className="hero-card" delayMs={120}>
-            <h3>Nega biz?</h3>
-            <ul>
-              <li>Yangi va sifatli mahsulotlar</li>
-              <li>Tezkor buyurtma qabul qilish</li>
-              <li>Telefon orqali tasdiqlash</li>
-              <li>Yetkazib berish imkoniyati</li>
+          <Reveal className="hero-card" delayMs={200} style={{ background: 'linear-gradient(135deg, var(--primary), var(--primary-600))', color: '#fff', border: 'none' }}>
+            <h3 style={{ borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '12px', marginBottom: '16px' }}>Kafolatlangan sifat</h3>
+            <ul style={{ color: 'rgba(255,255,255,0.9)', listStyle: 'none', padding: 0 }}>
+              <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>✨ 100% tabiiy va yangi mahsulotlar</li>
+              <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>🧁 Eksklyuziv dizayn va bezaklar</li>
+              <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>🚚 Xavfsiz va tezkor yetkazib berish</li>
+              <li style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>📞 24/7 mijozlarni qo'llab-quvvatlash</li>
             </ul>
           </Reveal>
         </div>
@@ -38,24 +39,30 @@ export default function HomePage() {
 
       <section className="container section">
         <Reveal className="section-head">
-          <h2>Ommabop mahsulotlar</h2>
-          <Link href="/catalog">Barchasini ko'rish</Link>
+          <div style={{ borderLeft: '4px solid var(--primary)', paddingLeft: '16px' }}>
+            <h2>Ommabop mahsulotlar</h2>
+            <p style={{ color: 'var(--muted)' }}>Eng ko'p tanlanadigan va sevib iste'mol qilinadigan shirinliklarimiz</p>
+          </div>
+          <Link href="/catalog" className="btn-ghost" style={{ borderRadius: '12px' }}>Hammasini ko'rish</Link>
         </Reveal>
         <StorefrontCatalog compact />
       </section>
 
       <section className="container section features-grid">
-        <Reveal className="feature-card" delayMs={40}>
-          <h3>Premium ingredientlar</h3>
-          <p>Har bir mahsulot sifat nazoratidan o'tadi va yangi ingredientlardan tayyorlanadi.</p>
+        <Reveal className="feature-card" delayMs={100} style={{ borderBottom: '4px solid var(--accent)' }}>
+          <div style={{ fontSize: '32px', marginBottom: '12px' }}>🍯</div>
+          <h3>Premium Ingredientlar</h3>
+          <p>Biz faqat eng sara va yuqori sifatli ingredientlardan foydalanamiz.</p>
         </Reveal>
-        <Reveal className="feature-card" delayMs={120}>
-          <h3>Tezkor logistika</h3>
-          <p>Buyurtmangiz tasdiqlangandan so'ng yetkazib berish jarayoni darhol boshlanadi.</p>
+        <Reveal className="feature-card" delayMs={200} style={{ borderBottom: '4px solid var(--primary)' }}>
+          <div style={{ fontSize: '32px', marginBottom: '12px' }}>🚀</div>
+          <h3>Tezkor Logistika</h3>
+          <p>Sizning buyurtmangiz belgilangan vaqtda va butun holatda yetkaziladi.</p>
         </Reveal>
-        <Reveal className="feature-card" delayMs={200}>
-          <h3>ERP bilan integratsiya</h3>
-          <p>Saytdagi buyurtmalar admin panelga real vaqtga yaqin tezlikda tushadi.</p>
+        <Reveal className="feature-card" delayMs={300} style={{ borderBottom: '4px solid var(--accent-strong)' }}>
+          <div style={{ fontSize: '32px', marginBottom: '12px' }}>💻</div>
+          <h3>ERP Integratsiyasi</h3>
+          <p>Buyurtmangiz tizimimizga avtomatik tarzda tushadi va darhol qayta ishlanadi.</p>
         </Reveal>
       </section>
 
@@ -82,6 +89,8 @@ export default function HomePage() {
           </Reveal>
         </div>
       </section>
+
+      <InstagramFeed />
     </main>
   );
 }

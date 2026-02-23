@@ -8,9 +8,10 @@ type RevealProps = {
   delayMs?: number;
   className?: string;
   as?: ElementType;
+  style?: CSSProperties;
 };
 
-export default function Reveal({ children, delayMs = 0, className = "", as: Tag = "div" }: RevealProps) {
+export default function Reveal({ children, delayMs = 0, className = "", as: Tag = "div", style }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
 
@@ -43,7 +44,7 @@ export default function Reveal({ children, delayMs = 0, className = "", as: Tag 
     <Tag
       ref={ref as never}
       className={`reveal ${visible ? "is-visible" : ""} ${className}`.trim()}
-      style={{ "--reveal-delay": `${delayMs}ms` } as CSSProperties}
+      style={{ ...style, "--reveal-delay": `${delayMs}ms` } as CSSProperties}
     >
       {children}
     </Tag>
