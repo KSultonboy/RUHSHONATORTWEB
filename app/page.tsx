@@ -12,7 +12,7 @@ export default function HomePage() {
             <p className="eyebrow" style={{ color: 'var(--accent-strong)' }}>Premium Patisserie</p>
             <h1>Sizning bayramingiz uchun nafis va shirin san'at asarlari</h1>
             <p>
-              Ruxshona Tort — bu nafaqat shirinliklar, balki unutilmas lahzalar.
+              Ruhshona Tort — bu nafaqat shirinliklar, balki unutilmas lahzalar.
               Har bir buyurtma mahorat va mehr bilan tayyorlanadi.
             </p>
             <div className="hero-actions">
