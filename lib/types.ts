@@ -44,6 +44,8 @@ export type CreatePublicOrderDto = {
   note?: string;
   customerId?: string;
   items: CreatePublicOrderItem[];
+  couponCode?: string;
+  pointsToUse?: number;
 };
 
 export type ProductReview = {
