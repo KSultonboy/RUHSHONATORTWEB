@@ -10,6 +10,8 @@ type Props = {
   compact?: boolean;
 };
 
+import { Search, Filter, SlidersHorizontal } from "lucide-react";
+
 export default function StorefrontCatalog({ compact = false }: Props) {
   const { addProduct } = useCart();
   const [categories, setCategories] = useState<Category[]>([]);
@@ -57,41 +59,55 @@ export default function StorefrontCatalog({ compact = false }: Props) {
   const visibleProducts = useMemo(() => (compact ? products.slice(0, 8) : products), [compact, products]);
 
   return (
-    <section className="catalog-block">
-      <div className="catalog-toolbar" style={{ display: 'grid', gridTemplateColumns: 'minmax(200px, 1fr) 2fr 1fr 1fr', gap: '16px' }}>
-        <select value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
-          <option value="">Barcha kategoriyalar</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+    <section className="catalog-block premium">
+      <div className="catalog-toolbar-premium">
+        <div className="search-box">
+          <Search size={18} className="search-icon" />
+          <input
+            value={q}
+            onChange={(event) => setQ(event.target.value)}
+            placeholder="Shirinlik qidirish..."
+          />
+        </div>
 
-        <input
-          value={q}
-          onChange={(event) => setQ(event.target.value)}
-          placeholder="Mahsulot qidirish..."
-        />
+        <div className="filter-group">
+          <div className="select-wrapper">
+            <Filter size={16} className="filter-icon" />
+            <select value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
+              <option value="">Barcha kategoriyalar</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <input
-          type="number"
-          value={minPrice}
-          onChange={(event) => setMinPrice(event.target.value)}
-          placeholder="Min narx"
-          style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid var(--cream-dark)' }}
-        />
-
-        <input
-          type="number"
-          value={maxPrice}
-          onChange={(event) => setMaxPrice(event.target.value)}
-          placeholder="Max narx"
-          style={{ width: '100%', padding: '12px', borderRadius: '12px', border: '1px solid var(--cream-dark)' }}
-        />
+          <div className="price-inputs">
+            <SlidersHorizontal size={16} className="price-icon" />
+            <input
+              type="number"
+              value={minPrice}
+              onChange={(event) => setMinPrice(event.target.value)}
+              placeholder="Min"
+            />
+            <span className="price-dash">—</span>
+            <input
+              type="number"
+              value={maxPrice}
+              onChange={(event) => setMaxPrice(event.target.value)}
+              placeholder="Max"
+            />
+          </div>
+        </div>
       </div>
 
-      {!loading ? <div className="catalog-count">{visibleProducts.length} ta mahsulot</div> : null}
+      {!loading ? (
+        <div className="catalog-status">
+          <div className="catalog-count-pill">{visibleProducts.length} mahsulot</div>
+          {q && <div className="search-query-pill">Qidiruv: "{q}"</div>}
+        </div>
+      ) : null}
 
       {loading ? (
         <div className="products-grid">

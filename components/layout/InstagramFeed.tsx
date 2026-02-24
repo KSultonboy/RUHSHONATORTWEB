@@ -14,19 +14,21 @@ const INSTA_POSTS = [
 
 export default function InstagramFeed() {
     return (
-        <section className="section" style={{ background: 'var(--cream-light)', padding: '100px 0' }}>
+        <section className="section" style={{ background: '#fff', padding: '100px 0' }}>
             <div className="container">
                 <Reveal className="section-head stacked" style={{ textAlign: 'center', marginBottom: '60px' }}>
-                    <h2 style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--primary)', fontWeight: '700', marginBottom: '16px' }}>Bizni kuzatib boring</h2>
-                    <h1 style={{ fontSize: '42px', marginBottom: '20px' }}>Instagram @ruxshona_tort</h1>
-                    <p style={{ maxWidth: '600px', margin: '0 auto', color: 'var(--muted)' }}>
-                        Eng yangi tortlarimiz, jarayonlar va shirin hayot lag'zalarini biz bilan bo'lishing.
+                    <span className="eyebrow">Bizni kuzatib boring</span>
+                    <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', fontFamily: 'var(--font-display)', marginTop: '12px' }}>
+                        Instagram <span style={{ color: 'var(--primary)' }}>@ruxshona_cakes</span>
+                    </h2>
+                    <p style={{ maxWidth: '600px', margin: '20px auto 0', color: 'var(--muted)', fontSize: '18px' }}>
+                        Eng yangi tortlarimiz, jarayonlar va shirin hayot lahzalarini biz bilan bo'lishing.
                     </p>
                 </Reveal>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
+                <div className="insta-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
                     {INSTA_POSTS.map((post, index) => (
-                        <Reveal key={post.id} style={{ animationDelay: `${index * 100}ms` }}>
+                        <Reveal key={post.id} delayMs={index * 100}>
                             <a
                                 href="https://instagram.com"
                                 target="_blank"
