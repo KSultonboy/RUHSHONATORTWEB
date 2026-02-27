@@ -6,6 +6,7 @@ import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ruhshonatort.com"),
   title: "Ruhshona Tort | Eng shirin va sifatli tortlar onlayn buyurtmasi",
   description: "Ruhshona Tort - professional qandolatchilik markazi. Bizning katalogimizdan eng mazali tort, shirinlik va desertlarni onlayn buyurtma qiling.",
   keywords: ["tort buyurtma qilish", "Ruhshona Tort", "Toshkent tortlari", "shirinliklar", "onlayn qandolat", "custom cakes Uzbekistan"],
