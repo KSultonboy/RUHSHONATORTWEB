@@ -78,10 +78,12 @@ export type Customer = {
   id: string;
   name: string;
   phone: string;
+  address?: string | null;
   points: number;
   birthday?: string | null;
   active: boolean;
   createdAt: string;
+  updatedAt?: string;
 };
 
 export type LoginCustomerDto = {
@@ -108,6 +110,16 @@ export type Coupon = {
 export type CustomerAuthResult = {
   token: string;
   customer: Customer;
+};
+
+export type CustomerMessage = {
+  id: string;
+  orderId: string;
+  trackCode: string;
+  status: "NEW" | "IN_DELIVERY" | "DELIVERED" | "CANCELED";
+  title: string;
+  body: string;
+  createdAt: string;
 };
 
 export type CustomRequestStatus = "PENDING" | "QUOTED" | "ACCEPTED" | "REJECTED" | "CANCELED";

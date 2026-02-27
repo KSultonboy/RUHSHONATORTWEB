@@ -5,6 +5,7 @@ import type {
   CreatePublicOrderResult,
   PublicProduct,
   Customer,
+  CustomerMessage,
   LoginCustomerDto,
   RegisterCustomerDto,
   CustomerAuthResult,
@@ -66,9 +67,27 @@ export function getCustomerMe(token: string) {
   });
 }
 
+export function updateCustomerMe(
+  token: string,
+  dto: { name?: string; address?: string; birthday?: string }
+) {
+  return apiFetch<Customer>("/customer-auth/me", {
+    method: "PATCH",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify(dto),
+  });
+}
+
 // Customer Orders
 export function getCustomerOrders(token: string) {
   return apiFetch<any[]>("/customers/orders", {
+    method: "GET",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export function getCustomerMessages(token: string) {
+  return apiFetch<CustomerMessage[]>("/customers/messages", {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });

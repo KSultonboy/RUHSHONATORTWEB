@@ -8,7 +8,7 @@ import { useAuth } from "@/providers/AuthProvider";
 import { money } from "@/lib/format";
 
 export default function OrdersPage() {
-    const { customer, token, loading: authLoading } = useAuth();
+    const { customer, token, loading: authLoading, refreshCustomer } = useAuth();
     const [orders, setOrders] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -22,7 +22,7 @@ export default function OrdersPage() {
 
         async function fetchOrders() {
             try {
-                const data = await getCustomerOrders(token!);
+                const [data] = await Promise.all([getCustomerOrders(token!), refreshCustomer()]);
                 setOrders(data);
             } catch (e) {
                 setError(e instanceof Error ? e.message : "Buyurtmalarni yuklashda xatolik");

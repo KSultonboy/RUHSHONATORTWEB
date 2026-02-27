@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/providers/CartProvider";
 import { useAuth } from "@/providers/AuthProvider";
+import { getCustomerMessages } from "@/lib/api";
 import { ShoppingBag, User, LogOut, Menu } from "lucide-react";
 
 function isActive(pathname: string, href: string) {
@@ -14,7 +16,31 @@ function isActive(pathname: string, href: string) {
 export default function SiteHeader() {
   const pathname = usePathname();
   const { count } = useCart();
-  const { customer, logout } = useAuth();
+  const { customer, token, logout } = useAuth();
+  const [messageCount, setMessageCount] = useState(0);
+
+  useEffect(() => {
+    if (!customer?.id || !token) {
+      setMessageCount(0);
+      return;
+    }
+
+    const storageKey = `ruxshona_profile_messages_seen_${customer.id}`;
+    const updateCount = async () => {
+      try {
+        const messages = await getCustomerMessages(token);
+        const lastSeen = Number(localStorage.getItem(storageKey) || "0");
+        const nextCount = messages.filter((message) => new Date(message.createdAt).getTime() > lastSeen).length;
+        setMessageCount(nextCount);
+      } catch {
+        setMessageCount(0);
+      }
+    };
+
+    void updateCount();
+    const timer = window.setInterval(() => void updateCount(), 30000);
+    return () => window.clearInterval(timer);
+  }, [customer?.id, token]);
 
   const links = [
     { href: "/", label: "Bosh sahifa" },
@@ -24,6 +50,7 @@ export default function SiteHeader() {
   ];
 
   if (customer) {
+    links.push({ href: "/profile", label: "Profil" });
     links.push({ href: "/orders", label: "Mening buyurtmalarim" });
   }
 
@@ -48,6 +75,9 @@ export default function SiteHeader() {
               className={isActive(pathname, link.href) ? "active" : ""}
             >
               {link.label}
+              {link.href === "/profile" && messageCount > 0 ? (
+                <span className="profile-message-badge">{messageCount}</span>
+              ) : null}
             </Link>
           ))}
         </nav>
@@ -84,4 +114,3 @@ export default function SiteHeader() {
     </header>
   );
 }
-
