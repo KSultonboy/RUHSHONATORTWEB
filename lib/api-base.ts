@@ -7,6 +7,14 @@ function normalizeBase(base: string) {
 }
 
 function resolveApiBaseUrls() {
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname.toLowerCase();
+    // Production storefront should always hit production API directly.
+    if (host === "ruhshonatort.com" || host === "www.ruhshonatort.com") {
+      return [productionBaseUrl];
+    }
+  }
+
   const envBase = normalizeBase(process.env.NEXT_PUBLIC_API_BASE_URL || "");
   if (envBase) {
     if (/^https?:\/\//i.test(envBase)) {
