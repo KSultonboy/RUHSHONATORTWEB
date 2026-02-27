@@ -22,6 +22,7 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [loadError, setLoadError] = useState("");
   const [messages, setMessages] = useState<CustomerMessage[]>([]);
 
   useEffect(() => {
@@ -33,16 +34,24 @@ export default function ProfilePage() {
 
     const load = async () => {
       setLoading(true);
+      setLoadError("");
+
       try {
-        const [me, profileMessages] = await Promise.all([getCustomerMe(token), getCustomerMessages(token)]);
+        const me = await getCustomerMe(token);
         setCustomer(me);
         setName(me.name || "");
         setAddress(me.address || "");
         setBirthday(me.birthday || "");
-        setMessages(profileMessages);
         localStorage.setItem(`ruxshona_profile_messages_seen_${me.id}`, String(Date.now()));
+
+        try {
+          const profileMessages = await getCustomerMessages(token);
+          setMessages(profileMessages);
+        } catch {
+          setMessages([]);
+        }
       } catch (e) {
-        setError(e instanceof Error ? e.message : "Profil ma'lumotlari yuklanmadi");
+        setLoadError(e instanceof Error ? e.message : "Profil ma'lumotlari yuklanmadi");
       } finally {
         setLoading(false);
       }
@@ -60,6 +69,7 @@ export default function ProfilePage() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!token) return;
+
     setError("");
     setSaving(true);
     try {
@@ -78,7 +88,11 @@ export default function ProfilePage() {
   }
 
   if (authLoading || loading) {
-    return <main className="container section"><p>Yuklanmoqda...</p></main>;
+    return (
+      <main className="container section">
+        <p>Yuklanmoqda...</p>
+      </main>
+    );
   }
 
   if (!token || !customer) {
@@ -87,7 +101,9 @@ export default function ProfilePage() {
         <Reveal>
           <h1>Profilni ko'rish uchun tizimga kiring</h1>
           <p style={{ marginBottom: "24px" }}>Buyurtma holatlari va shaxsiy ma'lumotlar shu bo'limda.</p>
-          <Link href="/login" className="btn-primary">Kirish</Link>
+          <Link href="/login" className="btn-primary">
+            Kirish
+          </Link>
         </Reveal>
       </main>
     );
@@ -99,28 +115,40 @@ export default function ProfilePage() {
         <h1>Shaxsiy profil</h1>
         <p>Ma'lumotlaringizni yangilang, buyurtmalar bo'yicha xabarlarni kuzating.</p>
 
+        {loadError ? <div className="message error">{loadError}</div> : null}
+
         <form onSubmit={onSubmit} className="profile-form">
-          <label>
-            <span>Ism</span>
-            <input value={name} onChange={(e) => setName(e.target.value)} required />
+          <label className="profile-field">
+            <span className="profile-label">Ism</span>
+            <input className="profile-input" value={name} onChange={(e) => setName(e.target.value)} required />
           </label>
-          <label>
-            <span>Telefon</span>
-            <input value={customer.phone} disabled />
+
+          <label className="profile-field">
+            <span className="profile-label">Telefon</span>
+            <input className="profile-input" value={customer.phone} disabled />
           </label>
-          <label>
-            <span>Manzil</span>
-            <input value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Toshkent..." />
+
+          <label className="profile-field">
+            <span className="profile-label">Manzil</span>
+            <input
+              className="profile-input"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Toshkent..."
+            />
           </label>
-          <label>
-            <span>Tug'ilgan kun</span>
-            <input type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)} />
+
+          <label className="profile-field">
+            <span className="profile-label">Tug'ilgan kun</span>
+            <input className="profile-input" type="date" value={birthday} onChange={(e) => setBirthday(e.target.value)} />
           </label>
 
           {error ? <div className="message error">{error}</div> : null}
 
           <div className="profile-actions">
-            <div className="profile-points">Ballar: <strong>{customer.points}</strong></div>
+            <div className="profile-points">
+              Ballar: <strong>{customer.points}</strong>
+            </div>
             <button type="submit" className="btn-primary" disabled={saving}>
               {saving ? "Saqlanmoqda..." : "Saqlash"}
             </button>
@@ -132,7 +160,7 @@ export default function ProfilePage() {
         <div className="profile-head">
           <div>
             <h2>Buyurtma xabarlari</h2>
-            <p>ERP’da holat o'zgarganida shu yerda ko'rinadi.</p>
+            <p>ERP'da holat o'zgarganida shu yerda ko'rinadi.</p>
           </div>
           <div className="profile-kpis">
             <span>Qabul: {stats.accepted}</span>

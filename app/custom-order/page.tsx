@@ -189,9 +189,8 @@ export default function CustomOrderPage() {
 
                         <button
                             type="submit"
-                            className="btn-primary"
+                            className="btn-primary custom-order-submit"
                             disabled={loading}
-                            style={{ height: '60px', fontSize: '18px', fontWeight: '800', marginTop: '10px' }}
                         >
                             {loading ? "Yuborilmoqda..." : "So'rovni rasmiylashtirish"}
                         </button>
